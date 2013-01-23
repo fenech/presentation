@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Postgraduate Conference Presentation</title>
+    <title>Helford Talk</title>
     
     <script src="js/prefixfree.min.js"></script>
     
@@ -233,10 +233,38 @@
 		</div>
 	</div>		
 	
+	<div id="gpu" class="step" data-x="3500" data-y="3000" data-z="1000">
+		<h1>Graphics Processing Unit (GPU) Computing</h1>
+		<ul>
+			<li>Data parallel algorithm &rarr; massively parallel architecture
+				<ul>
+					<li>Current code runs on ~10 CPU cores</li>
+					<li>High-end GPUs have ~1000 cores!</li>
+				</ul>
+			</li>			
+			<li>Dramatic performance improvements
+				<ul>
+					<li>Simulations of larger systems</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
 
-	
-	
-	<div id="larger" class="step" data-x="4000" data-y="3000" data-z="1000">
+	<div id="gpu-algorithm" class="step" data-x="2500" data-y="3000" data-z="1000">
+		<h1>Adapting the Algorithm</h1>
+		<img class="fit right" src="img/stencil.png" />
+		<ul>
+			<li>Make as many concurrent moves as possible</li>
+			<li>5-point 2D stencil
+				<ul>
+					<li>Operate on each slice, one by one</li>
+				</ul>
+			</li>
+			<li>~40x increase in performance</li>
+		</ul>
+	</div>
+
+	<div id="larger" class="step" data-x="1500" data-y="3000" data-z="1000">
 		<h1>Future Work: Larger Simulations</h1>
 		<ul>
 			<li>Higher resolution lattice
@@ -254,24 +282,7 @@
 		</ul>
 	</div>
 
-	<div id="gpu" class="step" data-x="3000" data-y="3000" data-z="1000">
-		<h1>Graphics Processing Unit (GPU) Computing</h1>
-		<ul>
-			<li>Data parallel algorithm &rarr; massively parallel architecture
-				<ul>
-					<li>Current code runs on ~10 CPU cores</li>
-					<li>High-end GPUs have ~1000 cores!</li>
-				</ul>
-			</li>			
-			<li>Dramatic performance improvements
-				<ul>
-					<li>Simulations of larger systems</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
-	<div id="acknowledge" class="step" data-x="2000" data-y="3000">
+	<div id="acknowledge" class="step" data-x="0" data-y="3000">
 		<h1>Thanks To</h1>
 		<ul>			
 			<li>Supervisors
