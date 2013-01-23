@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Postgraduate Conference Presentation</title>
+    <title>Many-Core Seminar Series</title>
     
     <script src="js/prefixfree.min.js"></script>
     
@@ -20,13 +20,13 @@
 <div id="impress">	
 	
 	<div id="title" class="step">		
-        <h1>Forces Between Nanoparticles in a Nematic Host</h1>
+        <h1>Modelling Forces Between Nanoparticles in a Liquid Crystal using OpenCL&reg;</h1>
         <img id="uob-logo" src="img/logo-screen.gif" />
         <p>Tom Fenech</p>        
     </div>
     
 
-	<div id="introduction" class="step" data-x="1000">
+	<div id="introduction" class="step" >
 		<h1>Introduction</h1>
 		<ul>
 			<li>Monte Carlo simulations of nematic liquid crystals</li>			
@@ -38,7 +38,7 @@
 		</ul>
 	</div>
 	
-	<div id="motivation" class="step" data-x="2000">
+	<div id="motivation" class="step" >
 		<h1>Motivation</h1>
 		<ul>
 			<li>Technological applications
@@ -53,9 +53,22 @@
 				</ul>
 			</li>
 		</ul>
-	</div>	
+	</div>
+	
+	<div id="liquid-crystal" class="step">
+		<h1>Liquid Crystals</h1>
+		<ul>
+			<li>A state of matter between solid and liquid
+				<ul>
+					<li>Properties of both states</li>
+				</ul>
+			</li>
+			<li>Rod-like molecular structure</li>
+			<li>Ordering of molecules</li>
+		</ul>
+	</div>
     	
-	<div id="director" class="step" data-x="3000">		
+	<div id="director" class="step" >		
 		<h1>The Director</h1>
 		<img class="right" src="img/director.png" />
 		<ul>
@@ -63,7 +76,7 @@
 		</ul>		
 	</div>    
 	
-	<div id="setup" class="step" data-x="4000">
+	<div id="setup" class="step" >
 		<h1>Simulation Setup</h1>		
 		<ul>
 			<li>Lattice of directors</li>
@@ -73,14 +86,14 @@
 		</div>
 	</div>
 	
-	<div id="animation-3d" class="step" data-x="5000">
+	<div id="animation-3d" class="step" >
 		<h1>Visualising the Simulation</h1>		
 		<div class="center-image">
 			<img class="fit" src="img/animation.gif" />
 		</div>
 	</div>
 	
-	<div id="frank" class="step" data-x="5000" data-y="1000">
+	<div id="frank" class="step"  >
 		<h1>Frank Equation</h1>
 		<ul>
 			<li>Continuum theory</li>
@@ -89,7 +102,7 @@
 		</ul>		
 	</div>
 	
-	<div id="frank-components" class="step" data-x="5000" data-y="1400">					
+	<div id="frank-components" class="step"  >					
 		<div class="splay left">
 			<h1>Splay</h1>
 			<p class="math">(&nabla;&sdot;<strong>n</strong>)<sup>2</sup></p>		
@@ -107,7 +120,7 @@
 		</div>
 	</div>
 	
-	<div id="monte" class="step" data-x="4000" data-y="1000">		
+	<div id="monte" class="step"  >		
 		<h1>Monte Carlo Algorithm</h1>		
 		<ul>
 			<li>One by one, each lattice site modified</li>
@@ -115,7 +128,7 @@
 		</ul>
 	</div>
 
-	<div id="move" class="step" data-x="3000" data-y="1000">
+	<div id="move" class="step"  >
 		<h1>Monte Carlo Moves</h1>
 		<img class="right" src="img/coning.png" />
 		<ul>
@@ -131,7 +144,7 @@
 		</ul>
 	</div>
 
-	<div id="accept" class="step" data-x="2000" data-y="1000">
+	<div id="accept" class="step"  >
 		<h1>Move Acceptance</h1>
 		<ul>
 			<li>Lower energy &rarr; always accepted</li>
@@ -143,7 +156,7 @@
 		</ul>
 	</div>
 
-	<div id="ghost" class="step" data-x="1000" data-y="1000">
+	<div id="ghost" class="step"  >
 		<h1>Ghost Particles</h1>
 		<img id="ghost-particle" src="img/cylinder.png" />
 		<ul>
@@ -157,7 +170,7 @@
 		</ul>
 	</div>
 
-	<div id="annealing" class="step" data-x="0" data-y="1000">
+	<div id="annealing" class="step"  >
 		<h1>Simulated Annealing</h1>
 		<ul>
 			<li>Minimisation of free energy</li>
@@ -170,8 +183,36 @@
 			</li>
 		</ul>
 	</div>
+	
+	<div id="parallel-problem" class="step">
+		<h1>Parallelisation - the Problem</h1>
+		<ul>
+			<li>Monte Carlo moves depend on each other</li>
+			<li>Acceptance of move depends on state of neighbours</li>
+		</ul>
+	</div>
+	
+	<div id="parallel-solution" class="step">
+		<h1>Parallelisation - the Solution</h1>
+		<ul>
+			<li>Ensure concurrent moves are far enough away from each other</li>
+		</ul>
+	</div>
+	
+	<div id="mpi-parallel" class="step">
+		<h1>Parallelisation (MPI)</h1>
+		<ul>
+			<li>1D domain decomposition</li>
+			<li>Two phases
+				<ul>
+					<li>Each process operates on half of slice</li>
+					<li>Inter-process communication</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
 
-	<div id="results-2d" class="step" data-y="2000">
+	<div id="results-2d" class="step" >
 		<h1>2D Results</h1>
 		<img class="fit right" src="img/final-2d.png" />
 		<ul>
@@ -182,11 +223,11 @@
 		</ul>
 	</div>
 
-	<div id="final-2d-zoom" class="step"  data-x="1000" data-y="2000">
+	<div id="final-2d-zoom" class="step"   >
 		<img class="no-trans fit" src="img/final-2d-zoom.png" />	
 	</div>
 	
-	<div id="contour-par" class="step" data-x="2000" data-y="2000">
+	<div id="contour-par" class="step"  >
 		<h1>Energy Contour Map (Parallel)</h1>
 		<ul>
 			<li>Distance from origin: separation</li>
@@ -198,7 +239,7 @@
 		</div>		
 	</div>
 	
-	<div id="contour-perp" class="step" data-x="3000" data-y="2000">
+	<div id="contour-perp" class="step"  >
 		<h1>Energy Contour Map (Perpendicular)</h1>
 		<div class="center-image">
 			<img class="fit" src="img/contour-perp.png" />
@@ -206,7 +247,7 @@
 		</div>
 	</div>	
 
-	<div id="results-3d" class="step" data-x="4000" data-y="2000">
+	<div id="results-3d" class="step"  >
 		<h1>3D Results</h1>
 		<ul>
 			<li>Preferred orientation to field of a cylindrical particle</li>
@@ -223,7 +264,7 @@
 		</div>		
 	</div>	
 	
-	<div id="graph-3d" class="step" data-x="5000" data-y="3000">
+	<div id="graph-3d" class="step"  >
 		<h1>Preferred Orientation of a Cylindrical Particle</h1>
 		<ul>
 			<li>Perpendicular to field &rarr; lower energy</li>
@@ -233,25 +274,7 @@
 		</div>
 	</div>		
 	
-	<div id="larger" class="step" data-x="4000" data-y="3000" data-z="1000">
-		<h1>Future Work: Larger Simulations</h1>
-		<ul>
-			<li>Higher resolution lattice
-				<ul>
-					<li>More circular circles&hellip;</li>
-				</ul>
-			</li>
-			<li>Simulations containing many particles</li>
-			<li>Aggregation of colloidal particles
-				<ul>
-					<li>Observed experimentally</li>
-					<li>Not entirely understood</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
-	<div id="gpu" class="step" data-x="3000" data-y="3000" data-z="1000">
+	<div id="gpu" class="step"   >
 		<h1>Graphics Processing Unit (GPU) Computing</h1>
 		<ul>
 			<li>Data parallel algorithm &rarr; massively parallel architecture
@@ -268,7 +291,40 @@
 		</ul>
 	</div>
 
-	<div id="acknowledge" class="step" data-x="2000" data-y="3000">
+	<div id="gpu-algorithm" class="step"   >
+		<h1>Adapting the Algorithm</h1>
+		<img class="fit right" src="img/stencil.png" />
+		<ul>
+			<li>Make as many concurrent moves as possible</li>
+			<li>5-point 2D stencil
+				<ul>
+					<li>Operate on each slice, one by one</li>
+				</ul>
+			</li>
+			<li>~40x increase in performance</li>
+		</ul>
+	</div>
+
+	<div id="larger" class="step"   >
+		<h1>Future Work: Larger Simulations</h1>
+		<ul>			
+			<li>Simulations containing many particles</li>
+			<li>Aggregation of colloidal particles
+				<ul>
+					<li>Observed experimentally</li>
+					<li>Not entirely understood</li>
+				</ul>
+			</li>
+			<li>Visualisation
+				<ul>
+					<li>Large volume of data</li>
+					<li>Highlight areas containing defects?</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="acknowledge" class="step"  >
 		<h1>Thanks To</h1>
 		<ul>			
 			<li>Supervisors
@@ -283,13 +339,19 @@
 		<p>and thanks for listening.</p>
 	</div>
 
-	<div id="questions" class="step" data-x="2500" data-y="1500" data-scale="6">
+	<div id="questions" class="step"   data-scale="6">
 		<h1>Questions?</h1>
 	</div>
 
 </div>
   
-<script src="js/impress.js"></script>  
+<script src="js/impress.js"></script>
+<script>
+var i, steps = document.getElementsByClassName('step');
+for (i = 0; i < steps.length; ++i) {
+	steps[i].setAttribute("data-x", i * 1000);
+}
+</script>
 <script>window.addEventListener('load', function () { impress().init(); }, false);</script>
 </body>
 </html>
