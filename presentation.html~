@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Postgraduate Conference Presentation</title>
+    
+    <script src="js/prefixfree.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/presentation.css" />
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div id="timeline"></div>
+
+<div id="impress">	
+	
+	<div id="title" class="step">		
+        <h1>Forces Between Nanoparticles in a Nematic Host</h1>
+        <img id="uob-logo" src="img/logo-screen.gif" />
+        <p>Tom Fenech</p>        
+    </div>
+    
+
+	<div id="introduction" class="step" data-x="1000">
+		<h1>Introduction</h1>
+		<ul>
+			<li>Monte Carlo simulations of nematic liquid crystals</li>			
+			<li>Supporting experimental work
+				<ul>
+					<li>Explore continuous parameter space</li>
+				</ul>
+			</li>			
+		</ul>
+	</div>
+	
+	<div id="motivation" class="step" data-x="2000">
+		<h1>Motivation</h1>
+		<ul>
+			<li>Technological applications
+				<ul>
+					<li>High precision displays</li>
+					<li>Self-assembled structures</li>
+				</ul>
+			</li>
+			<li>Two-way process
+				<ul>
+					<li>Control texture &harr; manipulate particles</li>
+				</ul>
+			</li>
+		</ul>
+	</div>	
+    	
+	<div id="director" class="step" data-x="3000">		
+		<h1>The Director</h1>
+		<img class="right" src="img/director.png" />
+		<ul>
+			<li>Direction of preferred orientation</li>		
+		</ul>		
+	</div>    
+	
+	<div id="setup" class="step" data-x="4000">
+		<h1>Simulation Setup</h1>		
+		<ul>
+			<li>Lattice of directors</li>
+		</ul>
+		<div class="center-image">
+			<img src="img/arrows.png" />
+		</div>
+	</div>
+	
+	<div id="animation-3d" class="step" data-x="5000">
+		<h1>Visualising the Simulation</h1>		
+		<div class="center-image">
+			<img class="fit" src="img/animation.gif" />
+		</div>
+	</div>
+	
+	<div id="frank" class="step" data-x="5000" data-y="1000">
+		<h1>Frank Equation</h1>
+		<ul>
+			<li>Continuum theory</li>
+			<li>Elastic potential energy between directors</li>
+			<li id="sum">Sum of three components:</li>
+		</ul>		
+	</div>
+	
+	<div id="frank-components" class="step" data-x="5000" data-y="1400">					
+		<div class="splay left">
+			<h1>Splay</h1>
+			<p class="math">(&nabla;&sdot;<strong>n</strong>)<sup>2</sup></p>		
+			<img class="no-trans" src="img/splay.png"/>
+		</div>
+		<div class="twist left">
+			<h1>+ Twist</h1>
+			<p class="math">(<strong>n</strong>&sdot;&nabla;&times;<strong>n</strong>)<sup>2</sup></p>
+			<img src="img/twist.png"/>
+		</div>
+		<div class="bend left">
+			<h1>+ Bend</h1>
+			<p class="math">(<strong>n</strong>&times;&nabla;&times;<strong>n</strong>)<sup>2</sup></p>
+			<img src="img/bend.png" />		
+		</div>
+	</div>
+	
+	<div id="monte" class="step" data-x="4000" data-y="1000">		
+		<h1>Monte Carlo Algorithm</h1>		
+		<ul>
+			<li>One by one, each lattice site modified</li>
+			<li>New Frank energy evaluated</li>			
+		</ul>
+	</div>
+
+	<div id="move" class="step" data-x="3000" data-y="1000">
+		<h1>Monte Carlo Moves</h1>
+		<img class="right" src="img/coning.png" />
+		<ul>
+			<li>Old director <strong>n</strong></li>
+			<li>New director selected from <br />
+				<em>&theta; [0, &gamma;], <br/> 
+					&phi; [0, 2 &pi;]</em></li>
+			<li><em>&gamma;</em> tuned to keep Monte Carlo acceptance ratio at &half;
+				<ul>
+					<li>Lower <em>&gamma;</em> &rarr; higher acceptance</li>
+				</ul>
+			</li>			
+		</ul>
+	</div>
+
+	<div id="accept" class="step" data-x="2000" data-y="1000">
+		<h1>Move Acceptance</h1>
+		<ul>
+			<li>Lower energy &rarr; always accepted</li>
+			<li>Higher energy &rarr; accepted with probability
+			<p><em>p = exp<span class="math">(-&beta;(E<sub>new</sub> - E<sub>old</sub>))</span></em></p>				
+			</li>
+			<li><em>&beta;</em>: Monte Carlo temperature <br/>
+			(&ne; thermodynamic temperature)</li>
+		</ul>
+	</div>
+
+	<div id="ghost" class="step" data-x="1000" data-y="1000">
+		<h1>Ghost Particles</h1>
+		<img id="ghost-particle" src="img/cylinder.png" />
+		<ul>
+			<li>Introduced after the system has equilibrated</li>
+			<li>A mixing parameter <em>G</em>
+				<ul>
+					<li><em>U<sub>Frank</sub> = G U<sub>no particle</sub> +&nbsp;(1&nbsp;-&nbsp;G)&nbsp;U<sub>particle</sub></em></li>
+				</ul>
+			</li>
+			<li><em>G</em> is gradually decreased &rarr; particle gradually introduced</li>			
+		</ul>
+	</div>
+
+	<div id="annealing" class="step" data-x="0" data-y="1000">
+		<h1>Simulated Annealing</h1>
+		<ul>
+			<li>Minimisation of free energy</li>
+			<li>Monte Carlo temperature is gradually decreased &rarr; <em>&beta;</em> gradually increases</li>			
+			<li>Rate of cooling is critical
+				<ul>
+					<li>Too fast &rarr; defects are annealed into system</li>
+					<li>Too slow &rarr; simulations take forever!</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="results-2d" class="step" data-y="2000">
+		<h1>2D Results</h1>
+		<img class="fit right" src="img/final-2d.png" />
+		<ul>
+			<li>Pairs of circular particles</li>
+			<li>Finite box</li>
+			<li>Change in energy as a function of separation, orientation</li>
+			<li>Gradient in energy &rarr; force between particles</li>
+		</ul>
+	</div>
+
+	<div id="final-2d-zoom" class="step"  data-x="1000" data-y="2000">
+		<img class="no-trans fit" src="img/final-2d-zoom.png" />	
+	</div>
+	
+	<div id="contour-par" class="step" data-x="2000" data-y="2000">
+		<h1>Energy Contour Map (Parallel)</h1>
+		<ul>
+			<li>Distance from origin: separation</li>
+			<li>Polar angle: orientation</li>
+		</ul>
+		<div class="center-image">
+			<img class="fit" src="img/contour-par.png" />
+			<img class="colourbar" src="img/colourbar.png" />
+		</div>		
+	</div>
+	
+	<div id="contour-perp" class="step" data-x="3000" data-y="2000">
+		<h1>Energy Contour Map (Perpendicular)</h1>
+		<div class="center-image">
+			<img class="fit" src="img/contour-perp.png" />
+			<img class="colourbar" src="img/colourbar.png" />
+		</div>
+	</div>	
+
+	<div id="results-3d" class="step" data-x="4000" data-y="2000">
+		<h1>3D Results</h1>
+		<ul>
+			<li>Preferred orientation to field of a cylindrical particle</li>
+			<li>Homeotropic surface anchoring</li>
+			<li>Two orientations:</li>
+		</ul>
+		<div class="schematic">
+			<p>Parallel</p>
+			<img class="fit" src="img/parallel.png" />
+		</div>
+		<div class="schematic">
+			<p>Perpendicular</p>
+			<img class="fit" src="img/perpendicular.png" />
+		</div>		
+	</div>	
+	
+	<div id="graph-3d" class="step" data-x="5000" data-y="3000">
+		<h1>Preferred Orientation of a Cylindrical Particle</h1>
+		<ul>
+			<li>Perpendicular to field &rarr; lower energy</li>
+		</ul>
+		<div class="center-image">
+			<img src="img/aspect.png" />
+		</div>
+	</div>		
+	
+	<div id="larger" class="step" data-x="4000" data-y="3000" data-z="1000">
+		<h1>Future Work: Larger Simulations</h1>
+		<ul>
+			<li>Higher resolution lattice
+				<ul>
+					<li>More circular circles&hellip;</li>
+				</ul>
+			</li>
+			<li>Simulations containing many particles</li>
+			<li>Aggregation of colloidal particles
+				<ul>
+					<li>Observed experimentally</li>
+					<li>Not entirely understood</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="gpu" class="step" data-x="3000" data-y="3000" data-z="1000">
+		<h1>Graphics Processing Unit (GPU) Computing</h1>
+		<ul>
+			<li>Data parallel algorithm &rarr; massively parallel architecture
+				<ul>
+					<li>Current code runs on ~10 CPU cores</li>
+					<li>High-end GPUs have ~1000 cores!</li>
+				</ul>
+			</li>			
+			<li>Dramatic performance improvements
+				<ul>
+					<li>Simulations of larger systems</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="acknowledge" class="step" data-x="2000" data-y="3000">
+		<h1>Thanks To</h1>
+		<ul>			
+			<li>Supervisors
+				<ul>
+					<li>Dr. Simon Hanna</li>
+					<li>Prof. Rob Richardson</li>					
+				</ul>
+			</li>
+			<li>EPSRC</li>
+			<li>Nanophysics and Soft Matter Group</li>			
+		</ul>
+		<p>and thanks for listening.</p>
+	</div>
+
+	<div id="questions" class="step" data-x="2500" data-y="1500" data-scale="6">
+		<h1>Questions?</h1>
+	</div>
+
+</div>
+  
+<script src="js/impress.js"></script>  
+<script>window.addEventListener('load', function () { impress().init(); }, false);</script>
+</body>
+</html>

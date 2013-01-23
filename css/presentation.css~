@@ -1,0 +1,161 @@
+body {
+	background: radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 80%,rgba(181,181,181,1) 100%);
+}
+
+.step {	
+    position: relative;
+    width: 900px;
+    padding: 40px;
+    margin: 20px auto;
+    
+    box-sizing: border-box;
+
+    font-family: georgia, serif;
+    font-size: 32px;
+    line-height: 1.5;
+}
+
+h1 {
+	font-size: 40px;
+}
+
+img {
+	opacity: 0;
+	transition: opacity 1s;
+}
+
+img.no-trans {
+	opacity: 1;	
+	transition: none;
+}
+
+.step.active img {
+	opacity: 1;
+	transition: opacity 1s 1s;
+}
+
+img.fit {
+	max-width: 100%;
+}
+
+li {
+	margin: 0.5em;
+	position: relative;
+}
+
+li a {
+	text-decoration: none;	
+}
+
+.step {
+	opacity: 0.3;
+	transition: opacity 1s;
+}
+
+.step.active {
+	opacity: 1;
+}
+
+.right {
+	width: 50%;
+	float: right;
+}
+
+img#uob-logo, img.colourbar {
+	float:right;
+}
+
+#frank.past {
+	opacity: 1;
+}
+
+#frank.past li {
+	opacity: 0.3;
+}
+
+#frank.past li#sum {
+	opacity: 1;
+}
+
+.splay, .twist, .bend {
+	opacity: 0;
+}
+
+#frank-components.active .splay {
+	opacity: 1;
+	transition: opacity 1s 1s;
+}
+
+#frank-components.active .twist {
+	opacity: 1;
+	transition: opacity 1s 2s;
+}
+
+#frank-components.active .bend {
+	opacity: 1;
+	transition: opacity 1s 3s;
+}
+
+.left {
+	float: left;
+	width: 30%;
+	text-align: center;
+}
+
+.schematic {
+	width: 40%;
+	margin: 0 5%;
+	float: left;
+	text-align: center;
+}
+
+.right {
+	float: right;
+	margin-left: 2em;
+	margin-bottom: 1em;
+}
+
+.math {
+	letter-spacing: 0.15em;
+}
+
+.math sub, .math sup {
+	letter-spacing: 0;
+}
+
+#ghost-particle {
+	transform: rotate(-36deg);
+	transition: opacity 1s;
+	opacity: 0;
+}
+
+#ghost.active #ghost-particle {	
+	transition: opacity 6s linear 3s;
+	opacity: 1;
+}
+
+#final-2d, #final-2d-zoom {
+	opacity: 0;
+}
+
+#final-2d.active, #final-2d-zoom.active {
+	opacity: 1;
+}
+
+.center-image {
+	text-align: center;
+}
+
+#questions {
+	opacity: 0;
+	z-index: -1;
+}
+
+#questions.active {
+	opacity: 1;
+}
+
+.impress-on-questions .step, .impress-on-questions .step img {
+	opacity: 1;
+	cursor: pointer;
+}
