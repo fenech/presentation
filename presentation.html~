@@ -28,7 +28,7 @@
     
 
 	<div id="introduction" class="step" >
-		<h1>Introduction</h1>
+		<h1>Introduction</h1>		
 		<ul>
 			<li>Monte Carlo simulations of nematic liquid crystals</li>
 			<li>Supporting experimental work</li>
@@ -36,29 +36,16 @@
 				<ul>
 					<li>Shape</li>
 					<li>Size</li>
-					<li>Surface coating</li>
 					<li>Aspect Ratio</li>
+					<li>Surface coating</li>
 				</ul>
 			</li>
-		</ul>
-	</div>
-	
-	<div id="liquid-crystal" class="step">
-		<h1>Liquid Crystals</h1>
-		<ul>
-			<li>A state of matter between solid and liquid
-				<ul>
-					<li>Properties of both states</li>
-				</ul>
-			</li>
-			<li>Only exists in certain molecules</li>
-			<li>Rod-like molecular structure</li>
-			<li>Ordering of molecules</li>
-		</ul>
+		</ul>		
 	</div>
 
 	<div id="motivation" class="step" >
 		<h1>Motivation</h1>
+		<img src="img/lcd-tv.jpg" class="right"/>
 		<ul>
 			<li>Technological applications
 				<ul>
@@ -73,6 +60,23 @@
 			</li>
 			<li>Forces &rarr; behaviour</li>
 		</ul>
+	</div>
+
+	
+	<div id="liquid-crystal" class="step">
+		<h1>Liquid Crystals</h1>
+		<img class="right" src="img/nematic.jpg"/>
+		<ul>
+			<li>A state of matter between solid and liquid
+				<ul>
+					<li>Properties of both states</li>
+				</ul>
+			</li>
+			<li>Only exists in certain molecules</li>
+			<li>Rod-like molecular structure</li>
+			<li>Ordering of molecules</li>
+		</ul>
+		<span class="footnote">Source: http://en.wikipedia.org/wiki/File:LiquidCrystal-MesogenOrder-Nematic.jpg</span>
 	</div>
 
 	<div id="method" class="step">
@@ -112,30 +116,6 @@
 		</ul>
 	</div>
 
-	<div id="defects" class="step">
-		<h1>Defects</h1>
-		<img src="img/defect.png" class="right"/>
-		<ul>
-			<li>Points where the director is undefined</li>
-			<li>High energy regions</li>
-			<li>Cause: conflicting boundary conditions
-				<ul>
-					<li>e.g. Particle surface vs. simulation walls</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-
-	<div id="setup" class="step" >
-		<h1>Simulation Setup</h1>		
-		<ul>
-			<li>Lattice of directors</li>
-		</ul>
-		<div class="center-image">
-			<img src="img/arrows.png" />
-		</div>
-	</div>
-	
 	<div id="frank" class="step"  >
 		<h1>Frank Equation</h1>
 		<ul>			
@@ -161,6 +141,30 @@
 			<img src="img/bend.png" />		
 		</div>
 	</div>
+
+	<div id="setup" class="step" >
+		<h1>Simulation Setup</h1>		
+		<ul>
+			<li>Lattice of directors</li>
+		</ul>
+		<div class="center-image">
+			<img src="img/arrows.png" />
+		</div>
+	</div>
+
+	<div id="defects" class="step">
+		<h1>Defects</h1>
+		<img src="img/defect.png" class="right"/>
+		<ul>
+			<li>Points where the director is undefined</li>
+			<li>High energy regions</li>
+			<li>Cause: conflicting boundary conditions
+				<ul>
+					<li>e.g. Particle surface vs. simulation walls</li>
+				</ul>
+			</li>
+		</ul>
+	</div>	
 
 	<div id="intro-summary" class="step">
 		<h1>Summary (intro)</h1>
@@ -376,6 +380,23 @@
 		</ul>
 	</div>
 
+	<div id="opencl" class="step">
+		<h1>OpenCL</h1>
+		<ul>
+			<li>Based on C99
+				<ul>
+					<li>C++ bindings</li>
+				</ul>
+			</li>
+			<li>General purpose computation</li>
+			<li>Variety of platforms
+				<ul>
+					<li>Including (but not limited to) GPUs</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
 	<div id="gpu-algorithm" class="step"   >
 		<h1>Adapting the Algorithm</h1>
 		<img class="fit right" src="img/stencil.png" />
@@ -385,7 +406,7 @@
 			<li>5-point 2D stencil
 				<ul>
 					<li>5 kernel calls per z-slice</li>
-					<li>Operate on each, one by one</li>
+					<li>Operate on each slice, one by one</li>
 				</ul>
 			</li>
 		</ul>
@@ -489,7 +510,9 @@ cl_int * inParticle = <b>new</b> cl_int[gridsize];</code></pre>
 					<li>80&times;16&times;1 &rarr;&nbsp;80&times;16&times;<em>N</em></li>
 				</ul>
 			</li>
-		</ul>		
+			<li>More work per kernel</li>
+			<li>Fewer kernel launches</li>
+		</ul>
 	</div>
 
 	<div id="graph-occupancy" class="step">
