@@ -9,6 +9,7 @@
     <script src="js/prefixfree.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="css/presentation.css" />
+    <link rel="stylesheet" type="text/css" href="css/prettify.css" />
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 </head>
@@ -20,7 +21,7 @@
 <div id="impress">	
 	
 	<div id="title" class="step">		
-        <h1>Modelling Forces Between Nanoparticles in a Liquid Crystal using OpenCL&reg;</h1>
+        <h1>Modelling Forces Between Nanoparticles in a Liquid Crystal using OpenCL&trade;</h1>
         <img id="uob-logo" src="img/logo-screen.gif" />
         <p>Tom Fenech</p>        
     </div>
@@ -29,27 +30,14 @@
 	<div id="introduction" class="step" >
 		<h1>Introduction</h1>
 		<ul>
-			<li>Monte Carlo simulations of nematic liquid crystals</li>			
-			<li>Supporting experimental work
+			<li>Monte Carlo simulations of nematic liquid crystals</li>
+			<li>Supporting experimental work</li>
+			<li>Explore continuous parameter space
 				<ul>
-					<li>Explore continuous parameter space</li>
-				</ul>
-			</li>			
-		</ul>
-	</div>
-	
-	<div id="motivation" class="step" >
-		<h1>Motivation</h1>
-		<ul>
-			<li>Technological applications
-				<ul>
-					<li>High precision displays</li>
-					<li>Self-assembled structures</li>
-				</ul>
-			</li>
-			<li>Two-way process
-				<ul>
-					<li>Control texture &harr; manipulate particles</li>
+					<li>Shape</li>
+					<li>Size</li>
+					<li>Surface coating</li>
+					<li>Aspect Ratio</li>
 				</ul>
 			</li>
 		</ul>
@@ -63,19 +51,81 @@
 					<li>Properties of both states</li>
 				</ul>
 			</li>
+			<li>Only exists in certain molecules</li>
 			<li>Rod-like molecular structure</li>
 			<li>Ordering of molecules</li>
 		</ul>
 	</div>
-    	
-	<div id="director" class="step" >		
+
+	<div id="motivation" class="step" >
+		<h1>Motivation</h1>
+		<ul>
+			<li>Technological applications
+				<ul>
+					<li>High precision displays</li>
+					<li>Self-assembled structures</li>
+				</ul>
+			</li>
+			<li>Two-way process
+				<ul>
+					<li>Control liquid crystal &harr; manipulate particles</li>
+				</ul>
+			</li>
+			<li>Forces &rarr; behaviour</li>
+		</ul>
+	</div>
+
+	<div id="method" class="step">
+		<h1>Method</h1>
+		<ul>
+			<li>Static simulations</li>
+			<li>Range of separations, orientations</li>
+			<li>Calculate energy
+				<ul>
+					<li>Gradient of energy &rarr; force</li>
+				</ul>
+			</li>
+	</div>	
+
+	<div id="continuum" class="step">
+		<h1>Continuum Theory</h1>
+		<ul>
+			<li>Not interested in individual molecules
+				<ul>
+					<li>Just their average orientation</li>
+				</ul>
+			</li>			
+			<li>Coarse-grained approach
+				<ul>
+					<li>Access to much larger size scales</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="director" class="step" >
 		<h1>The Director</h1>
 		<img class="right" src="img/director.png" />
 		<ul>
-			<li>Direction of preferred orientation</li>		
-		</ul>		
-	</div>    
-	
+			<li>Direction of preferred orientation</li>
+			<li>Average alignment of molecules</li>
+		</ul>
+	</div>
+
+	<div id="defects" class="step">
+		<h1>Defects</h1>
+		<img src="img/defect.png" class="right"/>
+		<ul>
+			<li>Points where the director is undefined</li>
+			<li>High energy regions</li>
+			<li>Cause: conflicting boundary conditions
+				<ul>
+					<li>e.g. Particle surface vs. simulation walls</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
 	<div id="setup" class="step" >
 		<h1>Simulation Setup</h1>		
 		<ul>
@@ -86,23 +136,15 @@
 		</div>
 	</div>
 	
-	<div id="animation-3d" class="step" >
-		<h1>Visualising the Simulation</h1>		
-		<div class="center-image">
-			<img class="fit" src="img/animation.gif" />
-		</div>
-	</div>
-	
 	<div id="frank" class="step"  >
 		<h1>Frank Equation</h1>
-		<ul>
-			<li>Continuum theory</li>
+		<ul>			
 			<li>Elastic potential energy between directors</li>
 			<li id="sum">Sum of three components:</li>
 		</ul>		
 	</div>
 	
-	<div id="frank-components" class="step"  >					
+	<div id="frank-components" class="step" data-y="400">
 		<div class="splay left">
 			<h1>Splay</h1>
 			<p class="math">(&nabla;&sdot;<strong>n</strong>)<sup>2</sup></p>		
@@ -119,12 +161,43 @@
 			<img src="img/bend.png" />		
 		</div>
 	</div>
-	
-	<div id="monte" class="step"  >		
-		<h1>Monte Carlo Algorithm</h1>		
+
+	<div id="intro-summary" class="step">
+		<h1>Summary (intro)</h1>
 		<ul>
-			<li>One by one, each lattice site modified</li>
-			<li>New Frank energy evaluated</li>			
+			<li>Lattice-based Monte Carlo</li>
+			<li>Director representation
+				<ul>
+					<li>Average orientation of molecules</li>
+				</ul>
+			</li>
+			<li>Defects - high energy regions</li>
+	</div>
+
+	<div id="algorithm" class="step">
+		<h1>The Algorithm</h1>
+<pre class="prettyprint"><code class="language-cpp">for (t = 0; t &lt; num_its; ++t) {
+  for (k = 0; k &lt; z_size; ++k) {
+    for (j = 0; k &lt; y_size; ++j) {
+      for (i = 0; k &lt; x_size; ++i) {
+        e_old = calc_energy(i, j, k);
+        trial_move(i, j, k);
+        e_new = calc_energy(i, j, k);
+        if (accept_reject(e_old, e_new))
+          accept(i, j, k);
+      }
+    }
+  }
+}</code></pre>
+	</div>
+
+	<div id="energy" class="step">
+		<h1>Energy Calculation</h1>
+		<object class="right" height="400" data="img/energy-centre.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Splay, Twist and Bend calculated</li>
+			<li>Nearest-neighbour derivatives</li>
+			<li>Average taken of forward and backward</li>
 		</ul>
 	</div>
 
@@ -140,7 +213,17 @@
 				<ul>
 					<li>Lower <em>&gamma;</em> &rarr; higher acceptance</li>
 				</ul>
-			</li>			
+			</li>
+		</ul>
+	</div>
+
+	<div id="energy-calc" class="step">
+		<h1>Energy Calculation (cont.)</h1>
+		<object class="right" height="400" data="img/energy-5-part.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Move at cell (i, j, k) &rarr; energy change at (i, j, k)</li>
+			<li>But also changes energy of neighbouring cells</li>
+			<li>Energy change at these cells must also be calculated</li>
 		</ul>
 	</div>
 
@@ -149,14 +232,14 @@
 		<ul>
 			<li>Lower energy &rarr; always accepted</li>
 			<li>Higher energy &rarr; accepted with probability
-			<p><em>p = exp<span class="math">(-&beta;(E<sub>new</sub> - E<sub>old</sub>))</span></em></p>				
+			<p><em>p = exp<span class="math">(-&beta;(E<sub>new</sub> - E<sub>old</sub>))</span></em></p>
 			</li>
 			<li><em>&beta;</em>: Monte Carlo temperature <br/>
 			(&ne; thermodynamic temperature)</li>
 		</ul>
 	</div>
 
-	<div id="ghost" class="step"  >
+	<!--<div id="ghost" class="step"  >
 		<h1>Ghost Particles</h1>
 		<img id="ghost-particle" src="img/cylinder.png" />
 		<ul>
@@ -168,13 +251,19 @@
 			</li>
 			<li><em>G</em> is gradually decreased &rarr; particle gradually introduced</li>			
 		</ul>
-	</div>
+	</div>-->
 
 	<div id="annealing" class="step"  >
 		<h1>Simulated Annealing</h1>
 		<ul>
 			<li>Minimisation of free energy</li>
-			<li>Monte Carlo temperature is gradually decreased &rarr; <em>&beta;</em> gradually increases</li>			
+			<li>Monte Carlo temperature is gradually decreased &rarr; <em>&beta;</em> gradually increases</li>
+			<li>Looking for global minimum
+				<ul>
+					<li>Maximise alignment</li>
+					<li>Minimise defects</li>
+				</ul>
+			</li>
 			<li>Rate of cooling is critical
 				<ul>
 					<li>Too fast &rarr; defects are annealed into system</li>
@@ -183,24 +272,25 @@
 			</li>
 		</ul>
 	</div>
+
 	
-	<div id="parallel-problem" class="step">
-		<h1>Parallelisation - the Problem</h1>
+	<div id="parallel" class="step">
+		<h1>Parallelisation</h1>
+		<h2>Considerations</h2>
 		<ul>
-			<li>Monte Carlo moves depend on each other</li>
+			<li>Monte Carlo moves are interdependent</li>
 			<li>Acceptance of move depends on state of neighbours</li>
 		</ul>
-	</div>
-	
-	<div id="parallel-solution" class="step">
-		<h1>Parallelisation - the Solution</h1>
+		<h2>Measures</h2>
 		<ul>
-			<li>Ensure concurrent moves are far enough away from each other</li>
-		</ul>
+			<li>Concurrent moves are suitably spaced</li>
+			<li>Accepted moves are reflected globally</li>
+		</ul>		
 	</div>
 	
 	<div id="mpi-parallel" class="step">
 		<h1>Parallelisation (MPI)</h1>
+		<img class="right" src="img/mpi-decomp.png"/>
 		<ul>
 			<li>1D domain decomposition</li>
 			<li>Two phases
@@ -245,23 +335,22 @@
 			<img class="fit" src="img/contour-perp.png" />
 			<img class="colourbar" src="img/colourbar.png" />
 		</div>
-	</div>	
+	</div>
 
 	<div id="results-3d" class="step"  >
 		<h1>3D Results</h1>
+		<img class="right" src="img/cylinders.png" />
 		<ul>
 			<li>Preferred orientation to field of a cylindrical particle</li>
 			<li>Homeotropic surface anchoring</li>
-			<li>Two orientations:</li>
-		</ul>
-		<div class="schematic">
-			<p>Parallel</p>
-			<img class="fit" src="img/parallel.png" />
-		</div>
-		<div class="schematic">
-			<p>Perpendicular</p>
-			<img class="fit" src="img/perpendicular.png" />
-		</div>		
+			<li>Two orientations:
+				<ul>
+					<li>Parallel</li>
+					<li>Perpendicular</li>
+				</ul>
+			</li>
+		</ul>		
+					
 	</div>	
 	
 	<div id="graph-3d" class="step"  >
@@ -272,20 +361,16 @@
 		<div class="center-image">
 			<img src="img/aspect.png" />
 		</div>
-	</div>		
-	
-	<div id="gpu" class="step"   >
-		<h1>Graphics Processing Unit (GPU) Computing</h1>
+	</div>
+
+	<div id="mpi-summary" class="step">
+		<h1>Summary (MPI)</h1>
 		<ul>
-			<li>Data parallel algorithm &rarr; massively parallel architecture
+			<li>Method can be parallelised</li>
+			<li>Still takes a long time</li>
+			<li>Limit to size of system
 				<ul>
-					<li>Current code runs on ~10 CPU cores</li>
-					<li>High-end GPUs have ~1000 cores!</li>
-				</ul>
-			</li>			
-			<li>Dramatic performance improvements
-				<ul>
-					<li>Simulations of larger systems</li>
+					<li>Would like to look at much larger simulations</li>
 				</ul>
 			</li>
 		</ul>
@@ -295,19 +380,161 @@
 		<h1>Adapting the Algorithm</h1>
 		<img class="fit right" src="img/stencil.png" />
 		<ul>
+			<li>1D domain decomposition</li>
 			<li>Make as many concurrent moves as possible</li>
 			<li>5-point 2D stencil
 				<ul>
-					<li>Operate on each slice, one by one</li>
+					<li>5 kernel calls per z-slice</li>
+					<li>Operate on each, one by one</li>
 				</ul>
 			</li>
-			<li>~40x increase in performance</li>
+		</ul>
+	</div>
+
+	<div id="performance-mpi-opencl" class="step" >
+		<h1>Performance Comparison</h1>
+		<table>
+		<tbody>
+			<tr><th>CPU</th><th>GPU</th><th>Simulation Size</th><th>Time (hours)</th></tr>
+			<tr><td>8&times;Xeon E5462 @ 2.8Ghz</td><td>N/A</td><td>64<sup>3</sup> = 262144</td><td>50</td></tr>
+			<tr><td>1&times;Xeon X5650 @ 2.67Ghz</td><td>1 x NVIDIA M2090<td>80<sup>3</sup> = 512000</td><td>32</td></tr>
+		</tbody>
+		</table>
+	</div>
+
+	<div id="performance-mpi-opencl-graph" class="step">
+		<h1>Performance Per Cell</h1>		
+		<object data="img/mpi-opencl.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>3&times; speedup</li>
+			<li>Possible to run 8 of these jobs per node</li>
+		</ul>
+	</div>
+
+	<div id="tuning-local-size" class="step">
+		<h1>Local Work Size - Considerations</h1>
+		<ul>
+			<li>Sufficient number of work groups (<em>blocks</em>)</li>
+			<li>Sufficient number of work items (<em>threads</em>)
+				<ul>
+					<li>Ideally maps to hardware</li>
+				</ul>
+			</li>
+			<li>Dependent on hardware</li>
+			<li>Auto-tuning at runtime &rarr; portable performance</li>
+		</ul>
+	</div>
+
+	<div id="runtime-tuning" class="step">
+		<h1>Runtime Auto-tuning</h1>
+		<img src="img/local-size.png" class="right"/>
+		<ul>
+			<li>Factorise global <em>x</em>-&nbsp;and&nbsp;<em>y</em>-size</li>
+			<li>For each permutation of factors:
+				<ul>
+					<li>Run monte kernel (&times;100)</li>
+					<li>Take timings</li>
+				</ul>
+			</li>
+			<li>Run remainder of simulation with best local size</li>
+		</ul>
+	</div>
+
+	<div id="tuning-global-private" class="step">
+		<h1>Global vs. Private Memory</h1>
+		<ul>
+			<li>Same value used many times</li>
+			<li>Store in private variable &rarr; explicit fetch from global memory</li>
+		</ul>
+	</div>
+
+	<div id="graph-global-private" class="step">		
+		<object data="img/global-private.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Easily implemented</li>
+			<li>Some performance gain</li>
+		</ul>
+	</div>
+	
+	<div id="tuning-aos-soa" class="step">
+		<h1>Array of Structs vs. Struct of Arrays</h1>		
+		<h2>Old</h2>
+<pre class="prettyprint"><code class="language-cpp">typedef struct {
+	fp theta;
+	fp phi;
+	cl_int locked;
+	cl_int inParticle;
+} cell;
+cell * grid = new cell[gridsize];</code></pre>		
+		<h2>New</h2>
+<pre class="prettyprint"><code class="language-cpp">fp * theta = <b>new</b> fp[gridsize];
+fp * phi = <b>new</b> fp[gridsize];
+cl_int * locked = <b>new</b> cl_int[gridsize];
+cl_int * inParticle = <b>new</b> cl_int[gridsize];</code></pre>
+		<ul>			
+			<li>More contiguous memory access</li>
+		</ul>
+	</div>
+
+	<div id="graph-aos-soa" class="step">
+		<object data="img/aos-soa.svg" type="image/svg+xml"></object>
+	</div>
+
+	<div id="tuning-occupancy" class="step">
+		<h1>Increasing Occupancy</h1>
+		<img class="right" src="img/multi-slice.png"/>
+		<ul>
+			<li>Increase global size
+				<ul>
+					<li>80&times;16&times;1 &rarr;&nbsp;80&times;16&times;<em>N</em></li>
+				</ul>
+			</li>
+		</ul>		
+	</div>
+
+	<div id="graph-occupancy" class="step">
+		<object data="img/occupancy.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Biggest impact yet</li>
+		</ul>
+	</div>
+
+	<div id="graph-final" class="step">
+		<object data="img/tuning-final.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>On the M2090, the global size can be made even bigger</li>
+			<li>&gt;3&times; speedup after tuning</li>
+			<li>&gt;10&times; compared to MPI on 8 CPUs</li>
+		</ul>
+	</div>
+
+	<div id="opencl-summary" class="step">
+		<h1>Conclusions</h1>
+		<ul>
+			<li>OpenCL method 10&times; faster than MPI
+				<ul>
+					<li>Not for free!</li>
+				</ul>
+			</li>
+			<li>Non-destructive changes using <span class="com">#define</span>s
+				<ul>
+					<li>Easy to switch</li>
+					<li>Code can get messy</li>
+					<li>C++ features now available in kernels</li>
+				</ul>
+			</li>
+			<li>Larger systems can be modelled
+				<ul>
+					<li>The bottom line: more interesting physics</li>
+				</ul>
+			</li>
+			
 		</ul>
 	</div>
 
 	<div id="larger" class="step"   >
 		<h1>Future Work: Larger Simulations</h1>
-		<ul>			
+		<ul>
 			<li>Simulations containing many particles</li>
 			<li>Aggregation of colloidal particles
 				<ul>
@@ -330,28 +557,66 @@
 			<li>Supervisors
 				<ul>
 					<li>Dr. Simon Hanna</li>
-					<li>Prof. Rob Richardson</li>					
+					<li>Prof. Rob Richardson</li>
+				</ul>
+			</li>
+			<li>Helpful People
+				<ul>
+					<li>Simon McIntosh-Smith</li>
+					<li>Prof. Mike Giles</li>
 				</ul>
 			</li>
 			<li>EPSRC</li>
-			<li>Nanophysics and Soft Matter Group</li>			
+			<li>Nanophysics and Soft Matter Group</li>
 		</ul>
 		<p>and thanks for listening.</p>
+		<span class="footnote">OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</span>
 	</div>
 
-	<div id="questions" class="step"   data-scale="6">
+	<div id="questions" class="step" data-scale="9">
 		<h1>Questions?</h1>
 	</div>
 
 </div>
   
 <script src="js/impress.js"></script>
+<script src="js/prettify.js"></script>
 <script>
-var i, steps = document.getElementsByClassName('step');
-for (i = 0; i < steps.length; ++i) {
-	steps[i].setAttribute("data-x", i * 1000);
+var i, steps = document.getElementsByClassName('step'),
+row=0, col=0, 
+height=1200, width=1500, 
+nCols=7;
+
+for (i = 0; i < steps.length - 1; ++i) {
+	
+	if ( steps[i].hasAttribute("data-y") ) {
+		steps[i].setAttribute("data-x", steps[i-1].getAttribute("data-x"));
+		steps[i].setAttribute("data-y", parseInt(steps[i-1].getAttribute("data-y"), 10) + parseInt(steps[i].getAttribute("data-y"), 10));
+	}
+	else { 
+		steps[i].setAttribute("data-x", col * width);
+		steps[i].setAttribute("data-y", row * height);
+	}
+	
+	if (row % 2 === 0) {
+		if (col < nCols - 1) ++col;
+		else ++row;
+	}
+	else {
+		if (col > 0) --col;
+		else ++row;
+	}
 }
+
+var q = document.getElementById('questions');
+q.setAttribute("data-x", width * (nCols - 1) / 2);
+q.setAttribute("data-y", height * (row - 1) / 2);
+
+
+window.addEventListener('load', function () { 
+	impress().init();
+	prettyPrint();
+}, false);
 </script>
-<script>window.addEventListener('load', function () { impress().init(); }, false);</script>
 </body>
 </html>

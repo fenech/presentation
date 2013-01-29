@@ -7,9 +7,7 @@ body {
     width: 900px;
     padding: 40px;
     margin: 20px auto;
-    
     box-sizing: border-box;
-
     font-family: georgia, serif;
     font-size: 32px;
     line-height: 1.5;
@@ -19,7 +17,11 @@ h1 {
 	font-size: 40px;
 }
 
-img {
+h2 {
+	font-size: 0.8em;
+}
+
+img, object {
 	opacity: 0;
 	transition: opacity 1s;
 }
@@ -29,7 +31,7 @@ img.no-trans {
 	transition: none;
 }
 
-.step.active img {
+.step.active img, .step.active object {
 	opacity: 1;
 	transition: opacity 1s 1s;
 }
@@ -102,13 +104,6 @@ img#uob-logo, img.colourbar {
 	text-align: center;
 }
 
-.schematic {
-	width: 40%;
-	margin: 0 5%;
-	float: left;
-	text-align: center;
-}
-
 .right {
 	float: right;
 	margin-left: 2em;
@@ -127,15 +122,12 @@ img#uob-logo, img.colourbar {
 	transform: rotate(-36deg);
 	transition: opacity 1s;
 	opacity: 0;
+	float: right;
 }
 
 #ghost.active #ghost-particle {	
 	transition: opacity 6s linear 3s;
 	opacity: 1;
-}
-
-#final-2d, #final-2d-zoom {
-	opacity: 0;
 }
 
 #final-2d.active, #final-2d-zoom.active {
@@ -155,7 +147,27 @@ img#uob-logo, img.colourbar {
 	opacity: 1;
 }
 
-.impress-on-questions .step, .impress-on-questions .step img {
+.impress-on-questions .step, .impress-on-questions .step * {
 	opacity: 1;
 	cursor: pointer;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table tr:nth-child(2n) {
+	background: #CCC;
+}
+pre.prettyprint {
+	font-size: 0.8em;
+}
+.footnote {
+	position: fixed;
+	font-size: 0.5em;
+	bottom: 0;
 }
