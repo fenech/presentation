@@ -3,12 +3,6 @@ body {
 	padding: 0;
 	margin: 0;
 }
-.animated {
-	display: none;
-}
-.step.active .animated {
-	display: inline;
-}
 .step {	
     position: relative;
     width: 900px;
@@ -32,6 +26,13 @@ img, object {
 img.no-trans {
 	opacity: 1;	
 	transition: none;
+}
+.step.defect-pics {
+    max-width: 32%;
+    max-height: 100%;
+}
+#lightboxOverlay {
+    max-height: 100%!important;
 }
 .step.active img, .step.active object {
 	opacity: 1;

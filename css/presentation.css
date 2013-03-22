@@ -27,6 +27,13 @@ img.no-trans {
 	opacity: 1;	
 	transition: none;
 }
+.step.defect-pics img {
+    max-width: 32%;
+    max-height: 100%;
+}
+#lightboxOverlay {
+    max-height: 100%!important;
+}
 .step.active img, .step.active object {
 	opacity: 1;
 	transition: opacity 1s 1s;

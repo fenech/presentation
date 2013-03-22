@@ -7,9 +7,12 @@
     <title>Nanophysics Colloquium</title>
     
     <script src="js/prefixfree.min.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+<!--     <script src="js/lightbox.js"></script> -->
     
     <link rel="stylesheet" type="text/css" href="css/presentation.css" />
     <link rel="stylesheet" type="text/css" href="css/prettify.css" />
+<!--     <link href="css/lightbox.css" rel="stylesheet" /> -->
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 </head>
@@ -436,6 +439,88 @@
 		</ul>
 	</div>
 
+    <div id="homeotropic-rods-ar5" class="step">        
+        <h1>Pairs of Rods</h1>
+        <object id="homeotropic-rods-graph" data="img/l40_r4_a0.svg" type="image/svg+xml"></object>
+        <ul>
+            <li>Aspect Ratio 5
+                <ul>
+                    <li>Length 100nm, Radius 10nm</li>
+                </ul>
+            </li>
+            <li>Homeotropic surface anchoring</li>
+            <li>Long axis perpendicular to bulk director</li>
+        </ul>                        
+    </div>
+
+    <div id="ar5-s0" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s0/_1.png"/>
+        <img src="img/rad10_len100_theta90/s0/_2.png"/>
+        <img src="img/rad10_len100_theta90/s0/_3.png"/>
+    </div>
+
+    <div id="ar5-s1" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s1/_1.png"/>
+        <img src="img/rad10_len100_theta90/s1/_2.png"/>
+        <img src="img/rad10_len100_theta90/s1/_3.png"/>
+    </div>
+
+    <div id="ar5-s2" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s2/_1.png"/>
+        <img src="img/rad10_len100_theta90/s2/_2.png"/>
+        <img src="img/rad10_len100_theta90/s2/_3.png"/>
+    </div>
+
+    <div id="ar5-s3" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s3/_1.png"/>
+        <img src="img/rad10_len100_theta90/s3/_2.png"/>
+        <img src="img/rad10_len100_theta90/s3/_3.png"/>
+    </div>
+
+    <div id="ar5-s4" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s4/_1.png"/>
+        <img src="img/rad10_len100_theta90/s4/_2.png"/>
+        <img src="img/rad10_len100_theta90/s4/_3.png"/>
+    </div>
+
+    <div id="ar5-s5" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s5/_1.png"/>
+        <img src="img/rad10_len100_theta90/s5/_2.png"/>
+        <img src="img/rad10_len100_theta90/s5/_3.png"/>
+    </div>
+
+    <div id="ar5-s6" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s6/_1.png"/>
+        <img src="img/rad10_len100_theta90/s6/_2.png"/>
+        <img src="img/rad10_len100_theta90/s6/_3.png"/>
+    </div>
+
+    <div id="ar5-s7" class="step defect-pics" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s7/_1.png"/>
+        <img src="img/rad10_len100_theta90/s7/_2.png"/>
+        <img src="img/rad10_len100_theta90/s7/_3.png"/>
+    </div>
+
+
+    
+
+<script>
+var a = document.getElementById("homeotropic-rods-graph"),
+i;
+
+a.addEventListener("load", function() {
+    var svgDoc = a.contentDocument;
+    var points = svgDoc.getElementsByTagName("use");                
+    for (i = 6; i < points.length; ++i) {            
+        (function (i) {
+            points[i].addEventListener("mousedown", function() {                 
+                $('#impress').jmpress("goTo", "#ar5-s" + (i - 6));
+            }, false);
+        }(i));
+    }        
+}, false);
+</script>
+
 	<div id="larger" class="step"   >
 		<h1>Future Work: Larger Simulations</h1>
 		<ul>
@@ -501,13 +586,15 @@
 
 </div>
   
-<script src="js/impress.js"></script>
+<script src="js/jmpress.js"></script>
 <script src="js/prettify.js"></script>
 <script>
-var i, steps = document.getElementsByClassName('step'),
+var i, j, steps,
 row=0, col=0, 
 height=1200, width=1500, 
 nCols=7;
+
+steps = document.getElementsByClassName('step');
 
 for (i = 0; i < steps.length - 1; ++i) {
 	
@@ -515,10 +602,15 @@ for (i = 0; i < steps.length - 1; ++i) {
 		steps[i].setAttribute("data-x", steps[i-1].getAttribute("data-x"));
 		steps[i].setAttribute("data-y", parseInt(steps[i-1].getAttribute("data-y"), 10) + parseInt(steps[i].getAttribute("data-y"), 10));
 	}
-	else { 
+	else if ( steps[i].hasAttribute("data-exclude") === false ){ 
 		steps[i].setAttribute("data-x", col * width);
 		steps[i].setAttribute("data-y", row * height);
 	}
+    else {
+        var target = steps[i].getAttribute("data-for");
+        steps[i].setAttribute("data-x", document.getElementById(target).getAttribute("data-x"));
+        steps[i].setAttribute("data-y", document.getElementById(target).getAttribute("data-y"));
+    }
 	
 	if (row % 2 === 0) {
 		if (col < nCols - 1) ++col;
@@ -534,9 +626,8 @@ var q = document.getElementById('questions');
 q.setAttribute("data-x", width * (nCols - 1) / 2);
 q.setAttribute("data-y", height * (row - 1) / 2);
 
-
 window.addEventListener('load', function () { 
-	impress().init();
+	$('#impress').jmpress();
 	prettyPrint();
 }, false);
 </script>
