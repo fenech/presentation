@@ -46,7 +46,7 @@
 		</ul>		
 	</div>
 
-<!--	<div id="motivation" class="step" >
+	<!--<div id="motivation" class="step" >
 		<h1>Motivation</h1>
 		<img src="img/lcd-tv.jpg" class="right"/>
 		<ul>
@@ -66,8 +66,7 @@
 		<span class="footnote">Source: http://www.flickr.com/photos/jvcamerica/3660100511/in/photostream/</span>
 	</div>-->
 
-	
-<!--	<div id="liquid-crystal" class="step">
+	<!--<div id="liquid-crystal" class="step">
 		<h1>Liquid Crystals</h1>
 		<img class="right" src="img/nematic.jpg"/>
 		<ul>
@@ -174,7 +173,7 @@
 }</code></pre>
 	</div>
 
-<!--<div id="energy" class="step">
+	<!--<div id="energy" class="step">
 		<h1>Energy Calculation</h1>
 		<object class="right" height="400" data="img/energy-centre.svg" type="image/svg+xml"></object>
 		<ul>
@@ -312,7 +311,7 @@
 	<!--<div id="final-2d-zoom" class="step"   >
 		<img class="no-trans fit" src="img/final-2d-zoom.png" />	
 	</div>-->
-	
+
 	<!--<div id="contour-par" class="step"  >
 		<h1>Energy Contour Map (Parallel)</h1>
 		<ul>
@@ -324,7 +323,7 @@
 			<img class="colourbar" src="img/colourbar.png" />
 		</div>		
 	</div>-->
-	
+
 	<!--<div id="contour-perp" class="step"  >
 		<h1>Energy Contour Map (Perpendicular)</h1>
 		<div class="center-image">
@@ -404,7 +403,7 @@
 	</div>
 
 	<div id="results-3d" class="step"  >
-		<h1>3D Results</h1>
+		<h1>Results</h1>
 		<img class="right" src="img/cylinders.png" />
 		<ul>
 			<li>Preferred orientation to field of a cylindrical particle</li>
@@ -536,7 +535,7 @@
                 </ul>
             </li>
             <li>Homeotropic surface anchoring</li>
-            <li>Long axis perpendicular to bulk director</li>
+            <li>Face normal perpendicular to bulk director</li>
         </ul>                        
     </div>
 
@@ -747,7 +746,7 @@
 		<span class="footnote">OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</span>
 	</div>
 
-	<div id="questions" class="step" data-scale="9">
+	<div id="questions" class="step" data-scale="8">
 		<h1>Questions?</h1>
 	</div>
 
@@ -759,7 +758,7 @@
 var i, j, steps = document.getElementsByClassName('step'),
 row=0, col=0, 
 height=1200, width=1500, 
-nCols=7;
+nCols=6;
 
 // Layout all the steps automatically in a snake
 for (i = 0; i < steps.length - 1; ++i) {
@@ -784,7 +783,6 @@ for (i = 0; i < steps.length - 1; ++i) {
         steps[i].setAttribute("data-x", document.getElementById(target).getAttribute("data-x"));
         steps[i].setAttribute("data-y", document.getElementById(target).getAttribute("data-y"));
     }
-//     steps[i].setAttribute("width", screen.width);
 }
 
 function selectSlide(slide) {
