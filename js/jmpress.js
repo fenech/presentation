@@ -82,7 +82,7 @@
         ,canvasClass: ''
         ,areaClass: ''
         ,notSupportedClass: 'not-supported'
-
+        
         /* CONFIG */
         ,fullscreen: true
 

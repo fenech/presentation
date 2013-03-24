@@ -27,12 +27,29 @@ img.no-trans {
 	opacity: 1;	
 	transition: none;
 }
-.step.defect-pics {
+.defect-pics img {
     max-width: 32%;
     max-height: 100%;
 }
-#lightboxOverlay {
-    max-height: 100%!important;
+.defect-pics.single img {
+    max-width: 100%;
+}
+.defect-pics {
+    z-index: -1;
+}
+.defect-pics.active {
+    z-index: 1;
+}
+.defect-pics .nav {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    cursor: pointer;
+    opacity: 0;
+}
+.defect-pics.active .nav {
+    opacity: 1;
+    transition: opacity 1s 1s;
 }
 .step.active img, .step.active object {
 	opacity: 1;
@@ -135,7 +152,7 @@ table, th, td {
 table {
 	border-collapse: collapse;
 }
-table tr:nth-child(2n) {
+table tr:first-child {
 	background: #CCC;
 }
 pre.prettyprint {
