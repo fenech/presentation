@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>2013 BLCS Annual Meeting</title>
+    
+    <script src="js/prefixfree.min.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+<!--     <script src="js/lightbox.js"></script> -->
+    
+    <link rel="stylesheet" type="text/css" href="css/presentation.css" />
+    <link rel="stylesheet" type="text/css" href="css/prettify.css" />
+<!--     <link href="css/lightbox.css" rel="stylesheet" /> -->
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div id="timeline"></div>
+
+<div id="impress">	
+	
+	<div id="title" class="step">
+        <h1>Forces Between Nanoparticles in a Nematic Host</h1>
+        <img id="uob-logo" src="img/logo-screen.gif" />
+        <p>Tom Fenech</p>        
+    </div>
+    
+
+	<div id="introduction" class="step" >
+		<h1>Introduction</h1>		
+		<ul>
+			<li>Monte Carlo simulations of nematic liquid crystals</li>
+			<li>Supporting experimental work</li>
+			<li>Explore continuous parameter space
+				<ul>
+					<li>Shape</li>
+					<li>Size</li>
+					<li>Aspect ratio</li>
+					<li>Surface anchoring</li>
+				</ul>
+			</li>
+		</ul>		
+	</div>
+
+<!--	<div id="motivation" class="step" >
+		<h1>Motivation</h1>
+		<img src="img/lcd-tv.jpg" class="right"/>
+		<ul>
+			<li>Technological applications
+				<ul>
+					<li>High precision displays</li>
+					<li>Self-assembled structures</li>
+				</ul>
+			</li>
+			<li>Two-way process
+				<ul>
+					<li>Control liquid crystal &harr; manipulate particles</li>
+				</ul>
+			</li>
+			<li>Forces &rarr; behaviour</li>
+		</ul>
+		<span class="footnote">Source: http://www.flickr.com/photos/jvcamerica/3660100511/in/photostream/</span>
+	</div>-->
+
+	
+<!--	<div id="liquid-crystal" class="step">
+		<h1>Liquid Crystals</h1>
+		<img class="right" src="img/nematic.jpg"/>
+		<ul>
+			<li>A state of matter between solid and liquid
+				<ul>
+					<li>Properties of both states</li>
+				</ul>
+			</li>
+			<li>Only exists in certain molecules</li>
+			<li>Rod-like molecular structure</li>
+			<li>Ordering of molecules</li>
+		</ul>
+		<span class="footnote">Source: http://en.wikipedia.org/wiki/File:LiquidCrystal-MesogenOrder-Nematic.jpg</span>
+	</div>-->
+
+	<div id="method" class="step">
+		<h1>Method</h1>
+		<ul>
+			<li>Static simulations</li>
+			<li>Range of separations, orientations</li>
+			<li>Calculate energy
+				<ul>
+					<li>Gradient of energy &rarr; force</li>
+				</ul>
+			</li>
+        </ul>
+	</div>	
+
+	<div id="continuum" class="step">
+		<h1>Continuum Theory</h1>
+		<ul>
+			<li>Not interested in individual molecules
+				<ul>
+					<li>Just their average orientation</li>
+				</ul>
+			</li>			
+			<li>Coarse-grained approach
+				<ul>
+					<li>Access to much larger size scales</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<!--<div id="director" class="step" >
+		<h1>The Director</h1>
+		<img class="right" src="img/director.png" />
+		<ul>
+			<li>Direction of preferred orientation</li>
+			<li>Average alignment of molecules</li>
+		</ul>
+	</div>-->
+
+	<div id="frank" class="step"  >
+		<h1>Frank Equation</h1>
+		<ul>			
+			<li>Elastic potential energy between directors</li>
+			<li id="sum">Sum of three components:</li>
+		</ul>		
+	</div>
+	
+	<div id="frank-components" class="step" data-y="400">
+		<div class="splay left">
+			<h1>Splay</h1>
+			<p class="math">(&nabla;&sdot;<strong>n</strong>)<sup>2</sup></p>		
+			<img class="no-trans" src="img/splay.png"/>
+		</div>
+		<div class="twist left">
+			<h1>+ Twist</h1>
+			<p class="math">(<strong>n</strong>&sdot;&nabla;&times;<strong>n</strong>)<sup>2</sup></p>
+			<img src="img/twist.png"/>
+		</div>
+		<div class="bend left">
+			<h1>+ Bend</h1>
+			<p class="math">(<strong>n</strong>&times;&nabla;&times;<strong>n</strong>)<sup>2</sup></p>
+			<img src="img/bend.png" />		
+		</div>
+	</div>
+
+	<div id="setup" class="step" >
+		<h1>Simulation Setup</h1>		
+		<ul>
+			<li>Lattice of directors</li>
+		</ul>
+		<div class="center-image">
+			<img src="img/arrows.png" />
+		</div>
+	</div>
+
+	<div id="algorithm" class="step">
+		<h1>The Algorithm</h1>
+<pre class="prettyprint"><code class="language-cpp">for (t = 0; t &lt; num_its; ++t) {
+  for (k = 0; k &lt; z_size; ++k) {
+    for (j = 0; k &lt; y_size; ++j) {
+      for (i = 0; k &lt; x_size; ++i) {
+        e_old = calc_energy(i, j, k);
+        trial_move(i, j, k);
+        e_new = calc_energy(i, j, k);
+        if (accept_reject(e_old, e_new))
+          accept(i, j, k);
+      }
+    }
+  }
+}</code></pre>
+	</div>
+
+<!--<div id="energy" class="step">
+		<h1>Energy Calculation</h1>
+		<object class="right" height="400" data="img/energy-centre.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Splay, Twist and Bend calculated</li>
+			<li>Nearest-neighbour derivatives</li>
+			<li>Average taken of forward and backward</li>
+		</ul>
+	</div>-->
+
+	<!--<div id="move" class="step"  >
+		<h1>Monte Carlo Moves</h1>
+		<img class="right" src="img/coning.png" />
+		<ul>
+			<li>Old director <strong>n</strong></li>
+			<li>New director selected from <br />
+				<em>&theta; [0, &gamma;], <br/> 
+					&phi; [0, 2 &pi;]</em></li>
+			<li><em>&gamma;</em> tuned to keep Monte Carlo acceptance ratio at &half;
+				<ul>
+					<li>Lower <em>&gamma;</em> &rarr; higher acceptance</li>
+				</ul>
+			</li>
+		</ul>
+	</div>-->
+
+	<!--<div id="energy-calc" class="step">
+		<h1>Energy Calculation (cont.)</h1>
+		<object class="right" height="400" data="img/energy-5-part.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Move at cell (i, j, k) &rarr; energy change at (i, j, k)</li>
+			<li>But also changes energy of neighbouring cells</li>
+			<li>Energy change at these cells must also be calculated</li>
+		</ul>
+	</div>-->
+
+	<div id="accept" class="step">
+		<h1>Move Acceptance</h1>
+		<ul>
+			<li>Lower energy &rarr; always accepted</li>
+			<li>Higher energy &rarr; accepted with probability
+			<p><em>p = exp<span class="math">(-&beta;(E<sub>new</sub> - E<sub>old</sub>))</span></em></p>
+			</li>
+			<li><em>&beta;</em>: Monte Carlo temperature <br/>
+			(&ne; thermodynamic temperature)</li>
+		</ul>
+	</div>
+
+	<div id="ghost" class="step">
+		<h1>Ghost Particles</h1>
+		<img id="ghost-particle" src="img/cylinder.png" />
+		<ul>
+			<li>Introduced after the system has equilibrated</li>
+			<li>A mixing parameter <em>G</em>
+				<ul>
+					<li><em>U<sub>Frank</sub> = G U<sub>no particle</sub> +&nbsp;(1&nbsp;-&nbsp;G)&nbsp;U<sub>particle</sub></em></li>
+				</ul>
+			</li>
+			<li><em>G</em> is gradually decreased &rarr; particle gradually introduced</li>			
+		</ul>
+	</div>
+
+	<div id="annealing" class="step">
+		<h1>Simulated Annealing</h1>
+		<ul>
+			<li>Minimisation of free energy</li>
+			<li>Monte Carlo temperature is gradually decreased &rarr; <em>&beta;</em> gradually increases</li>
+			<li>Looking for global minimum
+				<ul>
+					<li>Maximise alignment</li>
+					<li>Minimise defects</li>
+				</ul>
+			</li>
+			<li>Rate of cooling is critical
+				<ul>
+					<li>Too fast &rarr; defects are annealed into system</li>
+					<li>Too slow &rarr; simulations take forever!</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="defects" class="step">
+		<h1>Defects</h1>
+		<img src="img/defect.png" class="right"/>
+		<ul>
+			<li>Points where the director is undefined</li>
+			<li>High energy regions</li>
+			<li>Cause: conflicting boundary conditions
+				<ul>
+					<li>e.g. Particle surface vs. simulation walls</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<!--<div id="parallel" class="step">
+		<h1>Parallelisation</h1>
+		<h2>Considerations</h2>
+		<ul>
+			<li>Monte Carlo moves are interdependent</li>
+			<li>Acceptance of move depends on state of neighbours</li>
+		</ul>
+		<h2>Measures</h2>
+		<ul>
+			<li>Concurrent moves are suitably spaced</li>
+			<li>Accepted moves are reflected globally</li>
+		</ul>
+	</div>-->
+	
+	<!--<div id="mpi-parallel" class="step">
+		<h1>Parallelisation (MPI)</h1>
+		<img class="right" src="img/mpi-decomp.png"/>
+		<ul>
+			<li>1D domain decomposition</li>
+			<li>Two phases
+				<ul>
+					<li>Each process operates on half of slice</li>
+					<li>Inter-process communication</li>
+				</ul>
+			</li>
+		</ul>
+	</div>-->
+
+	<!--<div id="results-2d" class="step" >
+		<h1>2D Results</h1>
+		<img class="fit right" src="img/final-2d.png" />
+		<ul>
+			<li>Pairs of circular particles</li>
+			<li>Finite box</li>
+			<li>Change in energy as a function of separation, orientation</li>
+			<li>Gradient in energy &rarr; force between particles</li>
+		</ul>
+	</div>-->
+
+	<!--<div id="final-2d-zoom" class="step"   >
+		<img class="no-trans fit" src="img/final-2d-zoom.png" />	
+	</div>-->
+	
+	<!--<div id="contour-par" class="step"  >
+		<h1>Energy Contour Map (Parallel)</h1>
+		<ul>
+			<li>Distance from origin: separation</li>
+			<li>Polar angle: orientation</li>
+		</ul>
+		<div class="center-image">
+			<img class="fit" src="img/contour-par.png" />
+			<img class="colourbar" src="img/colourbar.png" />
+		</div>		
+	</div>-->
+	
+	<!--<div id="contour-perp" class="step"  >
+		<h1>Energy Contour Map (Perpendicular)</h1>
+		<div class="center-image">
+			<img class="fit" src="img/contour-perp.png" />
+			<img class="colourbar" src="img/colourbar.png" />
+		</div>
+	</div>-->
+
+	<!--<div id="graph-3d" class="step"  >
+		<h1>Preferred Orientation of a Cylindrical Particle</h1>
+		<ul>
+			<li>Perpendicular to field &rarr; lower energy</li>
+		</ul>
+		<div class="center-image">
+			<img src="img/aspect.png" />
+		</div>
+	</div>-->
+
+	<!--<div id="mpi-summary" class="step">
+		<h1>Summary (MPI)</h1>
+		<ul>
+			<li>Method can be parallelised</li>
+			<li>Still takes a long time</li>
+			<li>Limit to size of system
+				<ul>
+					<li>Would like to look at much larger simulations</li>
+				</ul>
+			</li>
+		</ul>
+	</div>-->
+
+	<div id="opencl" class="step">
+		<h1>OpenCL&trade;</h1>
+		<img class="right" src="img/OpenCL_Logo.png"/>
+		<ul>
+			<li>Based on C99
+				<ul>
+					<li>C++ bindings</li>
+				</ul>
+			</li>
+			<li>General purpose computation</li>
+			<li>Variety of platforms
+				<ul>
+					<li>Including (but not limited to) GPUs</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="performance-mpi-opencl" class="step" >
+		<h1>Performance Comparison</h1>
+		<table>
+		<tbody>
+			<tr><th>CPU</th><th>GPU</th><th>Simulation Size</th><th>Time (hours)</th></tr>
+			<tr><td>8&times;Xeon E5462 @ 2.8Ghz</td><td>N/A</td><td>64<sup>3</sup> = 262144</td><td>50</td></tr>
+			<tr><td>1&times;Xeon X5650 @ 2.67Ghz</td><td>1 x NVIDIA M2090<td>80<sup>3</sup> = 512000</td><td>32</td></tr>
+		</tbody>
+		</table>
+	</div>
+
+	<!--<div id="performance-mpi-opencl-graph" class="step">
+		<h1>Performance Per Cell</h1>		
+		<object data="img/mpi-opencl.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>3&times; speedup</li>
+			<li>Possible to run 8 of these jobs per node</li>
+		</ul>
+	</div>-->
+
+	<div id="graph-final" class="step">
+		<object data="img/tuning-final.svg" type="image/svg+xml"></object>
+		<ul>
+			<!--<li>On the M2090, the global size can be made even bigger</li>-->
+			<li>&gt;3&times; speedup after tuning</li>
+			<li>&gt;10&times; compared to MPI on 8 CPUs</li>
+		</ul>
+	</div>
+
+	<div id="results-3d" class="step"  >
+		<h1>3D Results</h1>
+		<img class="right" src="img/cylinders.png" />
+		<ul>
+			<li>Preferred orientation to field of a cylindrical particle</li>
+			<li>Homeotropic and homogeneous surface anchoring</li>
+			<li>Range of aspect ratios</li>
+		</ul>
+	</div>
+
+	<div id="cl-single-homeotropic" class="step">
+		<h1>Single Homeotropic Particle</h1>
+		<object data="img/homeotropic.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Higher aspect ratio rods and discs show greater variation in energy</li>
+		</ul>
+	</div>
+
+	<div id="cl-single-homogeneous" class="step">
+		<h1>Single Homogeneous Particle</h1>
+		<object data="img/homogeneous.svg" type="image/svg+xml"></object>
+		<ul>
+			<li>Long rods &rarr; parallel</li>
+			<li>Flat discs &rarr; perpendicular</li>
+		</ul>
+	</div>
+	
+	<div id="current-work" class="step">
+		<h1>Current Work</h1>
+		<img src="img/grid-animation.gif" class="animated right"/>
+		<ul>
+			<li>Pairs of particles</li>
+			<li>Aspect Ratios 1/5, 1/2, 2, 5</li>
+			<li>Energy variation with separation and rotation</li>
+		</ul>
+	</div>
+
+    <div id="homeotropic-rods-ar5" class="step">        
+        <h1>Pairs of Rods</h1>
+        <object id="homeotropic-rods-graph" data="img/l40_r4_a90.svg" type="image/svg+xml"></object>
+        <ul>
+            <li>Aspect Ratio 5
+                <ul>
+                    <li>Length 100nm, Radius 10nm</li>
+                </ul>
+            </li>
+            <li>Homeotropic surface anchoring</li>
+            <li>Long axis perpendicular to bulk director</li>
+        </ul>                        
+    </div>
+
+    <div id="ar5-s0" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s0/_1.png"/>
+        <img src="img/rad10_len100_theta90/s0/_2.png"/>
+        <img src="img/rad10_len100_theta90/s0/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s1" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s1/_1.png"/>
+        <img src="img/rad10_len100_theta90/s1/_2.png"/>
+        <img src="img/rad10_len100_theta90/s1/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s2" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s2/_1.png"/>
+        <img src="img/rad10_len100_theta90/s2/_2.png"/>
+        <img src="img/rad10_len100_theta90/s2/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s3" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s3/_1.png"/>
+        <img src="img/rad10_len100_theta90/s3/_2.png"/>
+        <img src="img/rad10_len100_theta90/s3/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s4" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s4/_1.png"/>
+        <img src="img/rad10_len100_theta90/s4/_2.png"/>
+        <img src="img/rad10_len100_theta90/s4/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s5" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s5/_1.png"/>
+        <img src="img/rad10_len100_theta90/s5/_2.png"/>
+        <img src="img/rad10_len100_theta90/s5/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s6" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s6/_1.png"/>
+        <img src="img/rad10_len100_theta90/s6/_2.png"/>
+        <img src="img/rad10_len100_theta90/s6/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar5-s7" class="step defect-pics" data-scale="0.2" data-exclude="true" data-for="homeotropic-rods-ar5">
+        <img src="img/rad10_len100_theta90/s7/_1.png"/>
+        <img src="img/rad10_len100_theta90/s7/_2.png"/>
+        <img src="img/rad10_len100_theta90/s7/_3.png"/>
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>   
+
+    <div id="homeotropic-discs-ar1_2" class="step">        
+        <h1>Pairs of Discs</h1>
+        <object id="homeotropic-discs-graph" data="img/l20_r20_a90.svg" type="image/svg+xml"></object>
+        <ul>
+            <li>Aspect Ratio 1/2
+                <ul>
+                    <li>Length 20nm, Radius 20nm</li>
+                </ul>
+            </li>
+            <li>Homeotropic surface anchoring</li>
+            <li>Long axis perpendicular to bulk director</li>
+        </ul>                        
+    </div>
+
+    <div id="ar1_2-s0-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s0/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s0-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s0/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s0-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s0/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s1-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s1/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s1-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s1/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s1-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s1/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s2-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s2/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s2-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s2/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s2-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s2/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s3-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s3/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s3-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s3/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s3-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s3/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s4-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s4/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s4-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s4/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s4-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s4/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s5-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s5/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s5-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s5/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s5-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s5/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s6-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s6/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s6-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s6/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s6-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s6/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    <div id="ar1_2-s7-1" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s7/_1.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s7-2" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s7/_2.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+
+    <div id="ar1_2-s7-3" class="step defect-pics single" data-scale="0.2" data-exclude="true" data-for="homeotropic-discs-ar1_2">
+        <img src="img/rad20_len20_theta90/s7/_3.png"/>        
+        <div class="nav">
+            <a class="nav-back">&larr;</a><a class="nav-return">&#8630;</a><a class="nav-forward">&rarr;</a>
+        </div>
+    </div>
+    
+	<div id="larger" class="step">
+		<h1>Future Work: Larger Simulations</h1>
+		<ul>
+			<li>Simulations containing many particles</li>
+			<li>Aggregation of colloidal particles
+				<ul>
+					<li>Observed experimentally</li>
+					<li>Not entirely understood</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="opencl-summary" class="step">
+		<h1>Conclusions</h1>
+		<ul>
+			<li>OpenCL method enables modelling of much larger systems</li>
+			<li>Wide range of particles
+				<ul>
+					<li>Shape, size, aspect&nbsp;ratio, surface&nbsp;alignment</li>
+				</ul>
+			</li>
+			<li>Wide range of geometries
+				<ul>
+					<li>Separation, orientation</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="acknowledge" class="step"  >
+		<h1>Thanks To</h1>
+		<ul>
+			<li>Supervisors
+				<ul>
+					<li>Dr. Simon Hanna</li>
+					<li>Prof. Rob Richardson</li>
+				</ul>
+			</li>
+			<li>EPSRC</li>
+			<li>Nanophysics and Soft Matter Group</li>
+		</ul>
+		<p>and thanks for listening.</p>
+		<span class="footnote">OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</span>
+	</div>
+
+	<div id="questions" class="step" data-scale="9">
+		<h1>Questions?</h1>
+	</div>
+
+</div>
+  
+<script src="js/jmpress.js"></script>
+<script src="js/prettify.js"></script>
+<script>
+var i, j, steps = document.getElementsByClassName('step'),
+row=0, col=0, 
+height=1200, width=1500, 
+nCols=7;
+
+// Layout all the steps automatically in a snake
+for (i = 0; i < steps.length - 1; ++i) {
+	if ( steps[i].hasAttribute("data-y") ) {
+		steps[i].setAttribute("data-x", steps[i-1].getAttribute("data-x"));
+		steps[i].setAttribute("data-y", parseInt(steps[i-1].getAttribute("data-y"), 10) + parseInt(steps[i].getAttribute("data-y"), 10));		
+	}
+	else if ( steps[i].hasAttribute("data-exclude") === false ) {
+		if (row % 2 === 0) {
+			if (col < nCols - 1) ++col;
+			else ++row;
+		}
+		else {
+			if (col > 0) --col;
+			else ++row;
+		}
+		steps[i].setAttribute("data-x", col * width);
+		steps[i].setAttribute("data-y", row * height);
+	}
+    else {
+        var target = steps[i].getAttribute("data-for");
+        steps[i].setAttribute("data-x", document.getElementById(target).getAttribute("data-x"));
+        steps[i].setAttribute("data-y", document.getElementById(target).getAttribute("data-y"));
+    }
+//     steps[i].setAttribute("width", screen.width);
+}
+
+function selectSlide(slide) {
+    return function () {
+        $('#impress').jmpress("select", "#" + slide);
+        console.log("#"+slide);
+    }
+}
+
+function clickyGraph(graphId, aspectRatio, single) {    
+    // Add click listeners to the points on the homeotropic rods graph
+    var a = document.getElementById(graphId);
+    a.addEventListener("load", function() {
+        var svgDoc = a.contentDocument;
+        var points = svgDoc.getElementsByTagName("use");                
+        for (i = 6; i < points.length; ++i) {
+            points[i].addEventListener("mousedown", selectSlide("ar" + aspectRatio + "-s" + (i - 6) + (single ? "-1" : "")), false);
+        }        
+    }, false);    
+}
+
+clickyGraph("homeotropic-rods-graph", "5")
+clickyGraph("homeotropic-discs-graph", "1_2", true)
+
+// Add back buttons to defect pic slides
+b = document.getElementsByClassName("defect-pics");    
+for (i = 0; i < b.length; ++i) {
+    var links = b[i].getElementsByTagName('a');
+    if (i > 0) {
+        links[0].addEventListener("mousedown", selectSlide(b[i-1].id), false);
+    }
+    links[1].addEventListener("mousedown", selectSlide(b[i].getAttribute("data-for")), false);
+    if (i < b.length - 1) {
+        links[2].addEventListener("mousedown", selectSlide(b[i+1].id), false);
+    }
+}
+
+// Set position of questions slide
+var q = document.getElementById('questions');
+q.setAttribute("data-x", width * (nCols - 1) / 2);
+q.setAttribute("data-y", height * (row - 1) / 2);
+
+// Load jmpress and prettyprint
+window.addEventListener('load', function () { 
+	$('#impress').jmpress({
+        viewPort: {
+            height: 1000
+        },
+        keyboard: {
+            keys: {
+                81: ['select', '#questions']
+            }
+        }
+	});
+	prettyPrint();
+}, false);
+</script>
+</body>
+</html>
