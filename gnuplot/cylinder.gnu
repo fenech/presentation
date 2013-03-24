@@ -1,0 +1,76 @@
+reset
+
+#set term pngcairo size 1000,1000
+set term wxt
+
+#set terminal postscript eps enhanced solid "Helvetica" 14
+#set term svg size 600,400 dynamic enhanced fname 'arial' fsize 11 butt solid
+
+unset key; unset border
+unset colorbox
+unset xtics; unset xlabel
+unset ytics; unset ylabel
+unset ztics
+set lmargin 0.1
+set rmargin 0.1
+set tmargin 0.1
+set bmargin 0.1
+
+set size square
+
+set parametric
+
+r = 4
+h = 20.0
+cx = 32.0
+cy = 32.0
+cz = 32.0
+
+top = cy + h / 2.0
+bottom = cy - h / 2.0
+
+set urange [0:2*pi]
+set vrange [0:r]
+set isosamples 29
+
+set style line 1 lc rgb '#666666' lt 1 lw 1 pt 7 ps 1.5
+set style line 2 lc rgb '#444444' lt 1 lw 1 pt 7 ps 1.5
+set style line 4 lc rgb '#771122' lt 2 lw 1 
+
+# Parametric functions for the cylinder
+# Axis of cylindrical symmetry parallel to y axis 
+
+fx(u,v) = v*sin(u) + cx
+fz(u,v) = v*cos(u) + cz
+
+gx(u) = r*sin(u) + cy
+gy(v) = v * (top - bottom) / r + bottom
+gz(u) = r*cos(u) + cy
+
+set xrange[0:63]
+set yrange[0:63]
+set zrange[0:63]
+
+set hidden3d nooffset
+
+i=16
+
+do for[i=30:30] {
+
+   set view 320,180
+
+   splot \
+   fx(u,v),bottom,fz(u,v) ls 1, \
+   gx(u),bottom,gz(u) ls 2, \
+   gx(u),gy(v),gz(u) ls 1, \
+   fx(u,v),top,fz(u,v) ls 1, \
+   gx(u),top,gz(u) ls 2
+
+}
+
+
+# Axis of cylindrical symmetry parallel to z axis 
+#fx(u) = r*cos(u) + 16
+#fy(u) = r*sin(u) + 16
+#fz(v) = v
+#splot 'gridpt4_30' using 6:7:8:9:10:11 w vec nohead, fx(u),fy(u),fz(v),r,0,6.0  w pm3d

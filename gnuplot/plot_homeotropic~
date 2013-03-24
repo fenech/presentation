@@ -1,0 +1,28 @@
+set title "Single Particles with Homeotropic Surface Anchoring" \
+offset 0, 1 font ",16"
+
+unset lmargin
+unset rmargin
+
+# unset key
+set format y "%g"
+
+set xrange [0:150]
+set style line 1 lc rgb '#0060ad' lt 1 lw 2 pt 5 ps 1   # --- blue
+set style line 2 lc rgb '#dd181f' lt 1 lw 2 pt 7 ps 1   # --- red
+set style line 3 lc rgb '#008000' lt 1 lw 2 pt 9 ps 1   # --- blue
+set style line 4 lc rgb '#FF8000' lt 1 lw 2 pt 11 ps 1   # --- red
+
+
+set xlabel "Polar angle /degrees"
+set ylabel "Energy /J"
+
+p 'homeotropic' index 0 u 1:4:6 w yerrorbars ls 1 title '1/5', \
+'homeotropic' index 1 u 1:4:6 w yerrorbars ls 2 title '1/2', \
+'homeotropic' index 2 u 1:4:6 w yerrorbars ls 3 title '2', \
+'homeotropic' index 3 u 1:4:6 w yerrorbars ls 4 title '5'
+
+
+set term svg size 800,400 font "Georgia"
+set out "homeotropic.svg"
+rep

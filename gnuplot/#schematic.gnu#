@@ -1,0 +1,28 @@
+set term pngcairo crop
+set out 'director.png'
+
+unset key; unset border
+unset colorbox
+unset xtics; unset xlabel
+unset ytics; unset ylabel
+unset ztics
+
+r = 5
+
+set urange [0:2*pi]
+set vrange [0:r]
+
+top = 8
+bottom = 2
+
+gx(u) = r*sin(u)
+gy(v) = v * (top - bottom) / r + bottom
+gz(u) = r*cos(u)
+
+set style line 1 lc rgb '#666666' lt 1 lw 1 pt 7 ps 1.5
+
+set size square
+
+
+
+

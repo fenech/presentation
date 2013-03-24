@@ -3,7 +3,7 @@ body {
 	padding: 0;
 	margin: 0;
 }
-.step {	
+.step {
     position: relative;
     width: 900px;
     padding: 40px;
@@ -147,7 +147,11 @@ img#uob-logo, img.colourbar {
 #questions.active {
 	opacity: 1;
 }
-.impress-on-questions .step, .impress-on-questions .step * {
+#questions h1 {
+	position: absolute;
+	top: 1.5em;
+}
+.step-questions .step, .step-questions .step * {
 	opacity: 1;
 	cursor: pointer;
 }

@@ -41,11 +41,16 @@ img.no-trans {
     z-index: 1;
 }
 .defect-pics .nav {
-    position: fixed;
-    top: 0;
-    left: 50%;
     cursor: pointer;
+    font-size: 2em;
+    left: 50%;
+    margin-left: -6em;
     opacity: 0;
+    position: fixed;
+    right: auto;
+    text-align: center;
+    top: 0;
+    width: 12em;
 }
 .defect-pics.active .nav {
     opacity: 1;
@@ -142,7 +147,11 @@ img#uob-logo, img.colourbar {
 #questions.active {
 	opacity: 1;
 }
-.impress-on-questions .step, .impress-on-questions .step * {
+#questions h1 {
+	position: absolute;
+	top: 1.5em;
+}
+.step-questions .step, .step-questions .step * {
 	opacity: 1;
 	cursor: pointer;
 }
