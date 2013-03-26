@@ -29,7 +29,11 @@ img.no-trans {
 }
 .defect-pics img {
     max-width: 32%;
-    max-height: 100%;
+    /*max-height: 100%;*/
+    display: none;
+}
+.defect-pics.active img {
+    display: inline;
 }
 .defect-pics.single img {
     max-width: 100%;
@@ -148,8 +152,8 @@ img#uob-logo, img.colourbar {
 	opacity: 1;
 }
 #questions h1 {
-	position: absolute;
-	top: 1.5em;
+/*	position: absolute;
+	top: 1.5em;*/
 }
 .step-questions .step, .step-questions .step * {
 	opacity: 1;
