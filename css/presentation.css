@@ -65,7 +65,7 @@ img.no-trans {
     transition: opacity 1s 1s;
 }
 object {
-    float: left;
+    width: 100%;
 }
 img {
     max-width: 100%;

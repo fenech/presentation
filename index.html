@@ -20,7 +20,7 @@
 
 	<div id="title" class="step">
         <h1>Forces Between Nanoparticles in a Nematic Host</h1>
-        <img id="uob-logo" src="img/logo-screen.gif" />
+        <img id="uob-logo" src="img/logo-screen.gif" alt="University of Bristol logo" />
         <p>Tom Fenech</p>
     </div>
 
@@ -60,7 +60,7 @@
         <ul>
             <li>Torque exerted by bulk much stronger</li>
         </ul>
-        <object width="100%" data="img/ellipses.svg" type="image/svg+xml"></object>
+        <object  data="img/ellipses.svg" type="image/svg+xml"></object>
     </div>
 
     <div id="spheres" class="step">
@@ -138,7 +138,7 @@
         <ul>
             <li>Higher aspect ratio &rarr; stronger torque</li>
         </ul>
-        <object width="100%" data="img/torodisc.svg" type="image/svg+xml"></object>
+        <object  data="img/torodisc.svg" type="image/svg+xml"></object>
     </div>
 
     <div id="pair-spherocylinders" class="step">
@@ -156,7 +156,7 @@
             <li>Novel system</li>
             <li>Flexibility of model</li>
         </ul>
-        <object width="100%" data="img/spherocylinder-torque.svg" type="image/svg+xml"></object>
+        <object  data="img/spherocylinder-torque.svg" type="image/svg+xml"></object>
     </div>
 
     <div id="conclusion" class="step">
@@ -218,8 +218,8 @@ function selectSlide(slide) {
 
 // Set position of questions slide
 var q = document.getElementById('questions');
-q.setAttribute("data-x", width * (nCols - 1) / 2);
-q.setAttribute("data-y", height * (row) / 2);
+q.setAttribute("data-x", width * (nCols) / 2);
+q.setAttribute("data-y", height * (row - 1) / 2);
 
 // Load jmpress and prettyprint
 window.addEventListener('load', function () {
