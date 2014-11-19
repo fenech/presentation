@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Viva Presentation</title>
-
-    <script src="js/prefixfree.min.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
 <!--     <script src="js/lightbox.js"></script> -->
 
@@ -32,7 +30,17 @@
     <div id="outline" class="step">
         <h1>Introduction</h1>
         <ul>
-            <li></li>
+            <li>New, high performance model
+                <ul>
+                    <li>Designed to run on modern systems</li>
+                </ul>
+            </li>
+            <li>Large simulations
+                <ul>
+                    <li>Millions of cells</li>
+                </ul>
+            </li>
+            <li>Testing the limits of the Frank elastic model</li>
         </ul>
     </div>
 
@@ -48,6 +56,11 @@
             </li>
             <li>Energy of defect core can be neglected</li>
         </ul>
+    </div>
+
+    <div id="two-dimensional" class="step">
+        <h1>Relative strength of torques on pairs of homeotropic ellipses</h1>
+        <object data="img/ellipses.svg" type="image/svg+xml"></object>
     </div>
 
     <div id="spheres" class="step">
@@ -114,7 +127,7 @@
         </ul>
     </div>
 
-    <div id="questions" class="step" data-scale="8">
+    <div id="questions" class="step" data-scale="4">
         <h1>Questions?</h1>
     </div>
 
@@ -126,7 +139,7 @@
 var i, j, steps = document.getElementsByClassName('step'),
 row=0, col=-1,
 height=1200, width=1500,
-nCols=6;
+nCols=5;
 
 // Layout all the steps automatically in a snake
 for (i = 0; i < steps.length - 1; ++i) {
