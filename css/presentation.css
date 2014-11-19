@@ -64,7 +64,10 @@ img.no-trans {
     opacity: 1;
     transition: opacity 1s 1s;
 }
-img.fit {
+object {
+    float: left;
+}
+img {
     max-width: 100%;
 }
 li {

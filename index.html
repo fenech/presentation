@@ -5,14 +5,9 @@
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Viva Presentation</title>
-
-    <script src="js/prefixfree.min.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
-<!--     <script src="js/lightbox.js"></script> -->
-
     <link rel="stylesheet" type="text/css" href="css/presentation.css" />
     <link rel="stylesheet" type="text/css" href="css/prettify.css" />
-<!--     <link href="css/lightbox.css" rel="stylesheet" /> -->
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 </head>
@@ -32,7 +27,17 @@
     <div id="outline" class="step">
         <h1>Introduction</h1>
         <ul>
-            <li></li>
+            <li>New, high performance model
+                <ul>
+                    <li>Designed to run on modern systems</li>
+                </ul>
+            </li>
+            <li>Large simulations
+                <ul>
+                    <li>Millions of cells</li>
+                </ul>
+            </li>
+            <li>Testing the limits of the Frank elastic model</li>
         </ul>
     </div>
 
@@ -50,6 +55,14 @@
         </ul>
     </div>
 
+    <div id="homeotropic-ellipses" class="step">
+        <h1>Relative strength of torques on pairs of homeotropic ellipses</h1>
+        <ul>
+            <li>Torque exerted by bulk much stronger</li>
+        </ul>
+        <object width="100%" data="img/ellipses.svg" type="image/svg+xml"></object>
+    </div>
+
     <div id="spheres" class="step">
         <h1>Spherical particles</h1>
         <ul>
@@ -64,6 +77,24 @@
         </ul>
     </div>
 
+    <div id="saturn-ring" class="step">
+        <h1>Saturn ring around single sphere</h1>
+        <img src="img/saturn.png" alt="homeotropic sphere enclosed in a Saturn ring" />
+        <ul>
+            <li>Expected result according to theory and experiment</li>
+            <li>Energy thresholding can show location of defects</li>
+        </ul>
+    </div>
+
+    <div id="spheres-chain" class="step">
+        <h1>Chaining of spheres</h1>
+        <img src="img/spheres-chain.png" alt="chain of spheres connected by dipole defect" />
+        <ul>
+            <li>Experimentally predicted result</li>
+            <li>Effective visualisation technique</li>
+        </ul>
+    </div>
+
     <div id="spherocylinder" class="step">
         <h1>Single spherocylinder</h1>
         <ul>
@@ -71,8 +102,17 @@
                 <ul>
                     <li>Metastability parallel to the far-field director</li>
                     <li>Very similar textures obtained to more complex model</li>
+                    <li>Preferred alignment perpendicular to far-field</li>
                 </ul>
             </li>
+        </ul>
+    </div>
+
+    <div id="metastable-spherocylinder" class="step">
+        <h1>Spherocylinder parallel to director</h1>
+        <img src="img/metastable-spherocylinder.png" alt="metastable spherocylinder parallel to the director" />
+        <ul>
+            <li>Symmetry of texture causes metastability</li>
         </ul>
     </div>
 
@@ -89,8 +129,16 @@
                     <li>Smooth variation in torque</li>
                 </ul>
             </li>
-            <li>Preferred orientation with surface normal to <strong>n</strong></li>
+            <li>Preferred orientation with surface normal to far-field</li>
         </ul>
+    </div>
+
+    <div id="torodisc-aspect-ratio" class="step">
+        <h1>Variation in torque with aspect ratio</h1>
+        <ul>
+            <li>Higher aspect ratio &rarr; stronger torque</li>
+        </ul>
+        <object width="100%" data="img/torodisc.svg" type="image/svg+xml"></object>
     </div>
 
     <div id="pair-spherocylinders" class="step">
@@ -100,6 +148,15 @@
             <li>Interaction dependent on axis of separation</li>
             <li>Much stronger than Van der Waals force</li>
         </ul>
+    </div>
+
+    <div id="spherocylinder-torque" class="step">
+        <h1>Torque between pairs of spherocylinders</h1>
+        <ul>
+            <li>Novel system</li>
+            <li>Flexibility of model</li>
+        </ul>
+        <object width="100%" data="img/spherocylinder-torque.svg" type="image/svg+xml"></object>
     </div>
 
     <div id="conclusion" class="step">
@@ -114,19 +171,18 @@
         </ul>
     </div>
 
-    <div id="questions" class="step" data-scale="8">
+    <div id="questions" class="step" data-scale="7">
         <h1>Questions?</h1>
     </div>
 
 </div>
 
 <script src="js/jmpress.js"></script>
-<script src="js/prettify.js"></script>
 <script>
 var i, j, steps = document.getElementsByClassName('step'),
 row=0, col=-1,
 height=1200, width=1500,
-nCols=6;
+nCols=4;
 
 // Layout all the steps automatically in a snake
 for (i = 0; i < steps.length - 1; ++i) {
@@ -176,8 +232,7 @@ window.addEventListener('load', function () {
                 81: ['select', '#questions']
             }
         }
-	});
-	prettyPrint();
+    });
 }, false);
 </script>
 </body>
